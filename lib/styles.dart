@@ -14,19 +14,6 @@ class FontWeights {
   static const black = FontWeight.w900;
 }
 
-List<Color> colors = const [
-  Color(0xFFFFFFFF),
-  Color(0xffF28B83),
-  Color(0xFFFCBC05),
-  Color(0xFFFFF476),
-  Color(0xFFCBFF90),
-  Color(0xFFA7FEEA),
-  Color(0xFFE6C9A9),
-  Color(0xFFE8EAEE),
-  Color(0xFFA7FEEA),
-  Color(0xFFCAF0F8)
-];
-
 Color primaryBlue = const Color(0xff2972ff);
 Color textBlack = const Color(0xff222222);
 Color textGrey = const Color(0xff94959b);

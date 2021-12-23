@@ -1,0 +1,108 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notesapp/screens/note/note_screen.dart';
+import 'package:notesapp/styles.dart';
+import 'package:notesapp/utils/note_colors.dart';
+import 'package:notesapp/utils/note_priority.dart';
+import 'package:notesapp/widgets/custom_floating_action_button.dart';
+import 'package:notesapp/widgets/note_tile.dart';
+
+class HomeScreen extends StatefulWidget {
+  static const routeName = '/home';
+
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
+      body: notesList(),
+      floatingActionButton: addNoteButton(),
+    );
+  }
+
+  PreferredSizeWidget appBar() {
+    return AppBar(
+      title: Text(
+        'Notes',
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      centerTitle: true,
+      leading: IconButton(
+        splashRadius: 30,
+        icon: const Icon(Icons.search),
+        onPressed: () {},
+      ),
+      actions: [
+        IconButton(
+          splashRadius: 30,
+          icon: const Icon(Icons.grid_view_outlined),
+          onPressed: () {},
+        ),
+        menuButton(),
+      ],
+    );
+  }
+
+  Widget menuButton() {
+    return SizedBox(
+      width: 50,
+      child: PopupMenuButton(
+        icon: ClipOval(
+          child: Align(
+            heightFactor: 1,
+            widthFactor: 1,
+            child: Image.asset('assets/images/profile.png'),
+          ),
+        ),
+        onSelected: (_) {},
+        itemBuilder: (context) => [
+          const PopupMenuItem(
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text(
+                'Logout',
+                style: kNoteBodyText1,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget notesList() {
+    return StaggeredGridView.countBuilder(
+      physics: const BouncingScrollPhysics(),
+      crossAxisCount: 4,
+      itemCount: 10,
+      itemBuilder: (BuildContext context, int index) {
+        return NoteTile(
+          onPressed: () => Navigator.of(context).pushNamed(NoteDetailScreen.routeName),
+          title: 'Notes App',
+          description: 'Build an awesome note taking app',
+          priority: NotePriority.getPriorityText(1),
+          priorityColor: NotePriority.getPriorityColor(1),
+          color: NoteColors.colors[1],
+          date: '2021-12-23T04:59:07.389+00:00',
+        );
+      },
+      staggeredTileBuilder: (int index) => const StaggeredTile.fit(2),
+      mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
+    );
+  }
+
+  Widget addNoteButton() {
+    return CustomFloatingActionButton(
+      onPressed: () {},
+      tooltip: 'Add Note',
+      icon: Icons.add,
+    );
+  }
+}
