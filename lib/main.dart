@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      initialRoute: NoteDetailScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

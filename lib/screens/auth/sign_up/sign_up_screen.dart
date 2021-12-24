@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/screens/auth/login/login_screen.dart';
+import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/password_input_field.dart';
 import 'package:notesapp/widgets/primary_button.dart';
@@ -20,8 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  bool _showPassword = false;
-  bool _showConfirmPassword = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
@@ -94,9 +96,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return PasswordInputField(
       controller: _passwordController,
       inputAction: TextInputAction.next,
-      obscureText: _showPassword,
+      obscureText: _obscurePassword,
       validator: Validator.password,
-      toggle: () => setState(() => _showPassword = !_showPassword),
+      toggle: () => setState(() => _obscurePassword = !_obscurePassword),
       hintText: 'Password',
     );
   }
@@ -105,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return PasswordInputField(
       controller: _confirmPasswordController,
       inputAction: TextInputAction.done,
-      obscureText: _showConfirmPassword,
+      obscureText: _obscureConfirmPassword,
       validator: (String? value) {
         if (value!.isEmpty) {
           return 'Please confirm password';
@@ -117,7 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         return null;
       },
-      toggle: () => setState(() => _showConfirmPassword = !_showConfirmPassword),
+      toggle: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
       hintText: 'Confirm Password',
     );
   }
@@ -129,7 +131,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
         }
       },
     );
@@ -145,7 +148,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             WidgetSpan(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(LoginScreen.routeName);
+                },
                 child: Text(
                   'Login.',
                   style: kNoteRegular.copyWith(color: primaryBlue),

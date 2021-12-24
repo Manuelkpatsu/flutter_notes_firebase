@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notesapp/screens/note/note_screen.dart';
+import 'package:notesapp/screens/splash/splash.dart';
 import 'package:notesapp/styles.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/utils/note_priority.dart';
@@ -8,7 +9,7 @@ import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/widgets/note_tile.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/home';
+  static const routeName = '/';
 
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -52,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget menuButton() {
     return SizedBox(
       width: 50,
-      child: PopupMenuButton(
+      child: PopupMenuButton<String>(
         icon: ClipOval(
           child: Align(
             heightFactor: 1,
@@ -60,9 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Image.asset('assets/images/profile.png'),
           ),
         ),
-        onSelected: (_) {},
+        onSelected: (itemSelected) {
+          switch (itemSelected) {
+            case '1':
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(SplashScreen.routeName, (route) => false);
+              break;
+          }
+        },
         itemBuilder: (context) => [
           const PopupMenuItem(
+            value: '1',
             child: ListTile(
               leading: Icon(Icons.logout),
               title: Text(

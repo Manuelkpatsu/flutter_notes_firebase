@@ -13,7 +13,7 @@ class Helper {
   }
 
   static String formatDateTimeAndDisplayWithTime(String dateTime) {
-    var formatter = DateFormat('MMMM dd yyyy hh:mm a');
+    var formatter = DateFormat('MMMM dd, yyyy hh:mm a');
     DateTime dt = DateTime.parse(dateTime);
     return formatter.format(dt);
   }

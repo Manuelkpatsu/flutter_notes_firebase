@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/primary_button.dart';
 import 'package:notesapp/widgets/text_input_field.dart';
@@ -85,7 +86,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-
+          Navigator.of(context).pushNamed(LoginScreen.routeName);
         }
       },
     );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/screens/auth/forgot_password/forgot_password.dart';
+import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/password_input_field.dart';
 import 'package:notesapp/widgets/primary_button.dart';
@@ -19,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _showPassword = false;
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -91,16 +94,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return PasswordInputField(
       controller: _passwordController,
       inputAction: TextInputAction.done,
-      obscureText: _showPassword,
+      obscureText: _obscurePassword,
       validator: Validator.password,
-      toggle: () => setState(() => _showPassword = !_showPassword),
+      toggle: () => setState(() => _obscurePassword = !_obscurePassword),
       hintText: 'Password',
     );
   }
 
   Widget forgotPassword() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(ForgotPasswordScreen.routeName);
+      },
       child: Text(
         'Forgot Password?',
         style: kNoteRegular.copyWith(color: primaryBlue),
@@ -115,7 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
         }
       },
     );
@@ -131,7 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             WidgetSpan(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                },
                 child: Text(
                   'Register.',
                   style: kNoteRegular.copyWith(color: primaryBlue),
