@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
 import 'package:notesapp/screens/note/note_screen.dart';
 import 'package:notesapp/screens/splash/splash.dart';
 import 'package:notesapp/styles.dart';
+import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/utils/note_priority.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
@@ -64,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onSelected: (itemSelected) {
           switch (itemSelected) {
             case '1':
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(SplashScreen.routeName, (route) => false);
+              logout();
               break;
           }
         },
@@ -109,9 +110,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget addNoteButton() {
     return CustomFloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed(AddUpdateNoteScreen.routeName);
+      },
       tooltip: 'Add Note',
       icon: Icons.add,
+    );
+  }
+
+  void logout() {
+    Helper.showAlertDialog(
+      context,
+      'Do you want to logout?',
+          () {
+        Navigator.of(context).pop();
+        Helper.showSnackbar(
+          context,
+          'User logged out successfully.',
+          Colors.green,
+        );
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(SplashScreen.routeName, (route) => false);
+      },
     );
   }
 }

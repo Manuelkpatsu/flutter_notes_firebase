@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
+import 'package:notesapp/screens/add_update_note/note_arguments.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/widgets/color_picker.dart';
@@ -72,7 +74,19 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         ),
       ),
       floatingActionButton: CustomFloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          NoteArguments noteArguments = NoteArguments(
+            title: _titleController.text,
+            description: _descriptionController.text,
+            priority: 2,
+            color: widget.color,
+          );
+
+          Navigator.of(context).pushNamed(
+            AddUpdateNoteScreen.routeName,
+            arguments: noteArguments,
+          );
+        },
         icon: Icons.edit_outlined,
         tooltip: 'Edit Note',
       ),
