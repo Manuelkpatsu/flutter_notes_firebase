@@ -24,7 +24,7 @@ class AppRouter {
       case SearchScreen.routeName:
         return MaterialPageRoute(builder: (_) => const SearchScreen());
       case NoteDetailScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const NoteDetailScreen());
+        return MaterialPageRoute(builder: (_) => NoteDetailScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

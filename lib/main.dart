@@ -6,6 +6,7 @@ import 'package:notesapp/screens/auth/forgot_password/forgot_password.dart';
 import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:notesapp/screens/home/home_screen.dart';
+import 'package:notesapp/screens/note/note_screen.dart';
 import 'package:notesapp/screens/splash/splash.dart';
 
 import 'generated/l10n.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: NoteDetailScreen.routeName,
       onGenerateRoute: AppRouter.generateRoute,
     );
   }
