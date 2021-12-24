@@ -9,6 +9,7 @@ import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/utils/note_priority.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/widgets/note_tile.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSizeWidget appBar() {
     return AppBar(
       title: Text(
-        'Notes',
+        S.current.appTitle,
         style: Theme.of(context).textTheme.headline5,
       ),
       centerTitle: true,
@@ -71,12 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         itemBuilder: (context) => [
-          const PopupMenuItem(
+          PopupMenuItem(
             value: '1',
             child: ListTile(
-              leading: Icon(Icons.logout),
+              leading: const Icon(Icons.logout),
               title: Text(
-                'Logout',
+                S.current.logOut,
                 style: kNoteBodyText1,
               ),
             ),
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onPressed: () {
         Navigator.of(context).pushNamed(AddUpdateNoteScreen.routeName);
       },
-      tooltip: 'Add Note',
+      tooltip: S.current.addNote,
       icon: Icons.add,
     );
   }
@@ -121,12 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void logout() {
     Helper.showAlertDialog(
       context,
-      'Do you want to logout?',
+      S.current.wantToLogOut,
           () {
         Navigator.of(context).pop();
         Helper.showSnackbar(
           context,
-          'User logged out successfully.',
+          S.current.loggedOutSuccessfully,
           Colors.green,
         );
         Navigator.of(context)

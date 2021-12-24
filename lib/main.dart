@@ -2,11 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:notesapp/screens/auth/forgot_password/forgot_password.dart';
-import 'package:notesapp/screens/auth/login/login_screen.dart';
-import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
-import 'package:notesapp/screens/home/home_screen.dart';
-import 'package:notesapp/screens/note/note_screen.dart';
 import 'package:notesapp/screens/splash/splash.dart';
 
 import 'generated/l10n.dart';

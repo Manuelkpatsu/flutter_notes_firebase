@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/auth/forgot_password/forgot_password.dart';
 import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:notesapp/screens/home/home_screen.dart';
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget title() {
     return Text(
-      'Login to your\naccount',
+      S.current.loginToAccount,
       style: kNoteHeadLine.copyWith(color: textBlack),
     );
   }
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
       validator: Validator.email,
-      hintText: 'Email',
+      hintText: S.current.email,
     );
   }
 
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: _obscurePassword,
       validator: Validator.password,
       toggle: () => setState(() => _obscurePassword = !_obscurePassword),
-      hintText: 'Password',
+      hintText: S.current.password,
     );
   }
 
@@ -107,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context).pushNamed(ForgotPasswordScreen.routeName);
       },
       child: Text(
-        'Forgot Password?',
+        S.current.forgotPassword,
         style: kNoteRegular.copyWith(color: primaryBlue),
       ),
     );
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget loginButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      text: 'Login',
+      text: S.current.login,
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.center,
       child: RichText(
         text: TextSpan(
-          text: 'Don\'t have an account? ',
+          text: S.current.doNotHaveAccount,
           style: kNoteRegular.copyWith(color: textGrey),
           children: [
             WidgetSpan(
@@ -141,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pushNamed(SignUpScreen.routeName);
                 },
                 child: Text(
-                  'Register.',
+                  S.current.register,
                   style: kNoteRegular.copyWith(color: primaryBlue),
                 ),
               ),

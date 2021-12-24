@@ -48,10 +48,10 @@ class S {
   }
 
   /// `Notes.`
-  String get title {
+  String get appTitle {
     return Intl.message(
       'Notes.',
-      name: 'title',
+      name: 'appTitle',
       desc: '',
       args: [],
     );
@@ -62,6 +62,386 @@ class S {
     return Intl.message(
       'take your notes✍️',
       name: 'subTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Note`
+  String get addNote {
+    return Intl.message(
+      'Add Note',
+      name: 'addNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Note`
+  String get editNote {
+    return Intl.message(
+      'Edit Note',
+      name: 'editNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note saved successfully`
+  String get noteSaved {
+    return Intl.message(
+      'Note saved successfully',
+      name: 'noteSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, fields cannot be empty.`
+  String get fieldsCannotBeEmpty {
+    return Intl.message(
+      'Sorry, fields cannot be empty.',
+      name: 'fieldsCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to delete the note?`
+  String get deleteNote {
+    return Intl.message(
+      'Do you want to delete the note?',
+      name: 'deleteNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note successfully deleted`
+  String get successfullyDeleted {
+    return Intl.message(
+      'Note successfully deleted',
+      name: 'successfullyDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low`
+  String get low {
+    return Intl.message(
+      'Low',
+      name: 'low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get high {
+    return Intl.message(
+      'High',
+      name: 'high',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Very High`
+  String get veryHigh {
+    return Intl.message(
+      'Very High',
+      name: 'veryHigh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to logout?`
+  String get wantToLogOut {
+    return Intl.message(
+      'Do you want to logout?',
+      name: 'wantToLogOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User logged out successfully.`
+  String get loggedOutSuccessfully {
+    return Intl.message(
+      'User logged out successfully.',
+      name: 'loggedOutSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logOut {
+    return Intl.message(
+      'Logout',
+      name: 'logOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register new\naccount`
+  String get registerAccount {
+    return Intl.message(
+      'Register new\naccount',
+      name: 'registerAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account? `
+  String get alreadyHaveAccount {
+    return Intl.message(
+      'Already have an account? ',
+      name: 'alreadyHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login to your\naccount`
+  String get loginToAccount {
+    return Intl.message(
+      'Login to your\naccount',
+      name: 'loginToAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password?`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account? `
+  String get doNotHaveAccount {
+    return Intl.message(
+      'Don\'t have an account? ',
+      name: 'doNotHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot your\npassword`
+  String get forgotYourPassword {
+    return Intl.message(
+      'Forgot your\npassword',
+      name: 'forgotYourPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get submit {
+    return Intl.message(
+      'Submit',
+      name: 'submit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ok`
+  String get ok {
+    return Intl.message(
+      'Ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please confirm password`
+  String get pleaseConfirmPassword {
+    return Intl.message(
+      'Please confirm password',
+      name: 'pleaseConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get passwordsDoNotMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'passwordsDoNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is required`
+  String get emailRequired {
+    return Intl.message(
+      'Email is required',
+      name: 'emailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The email you entered is invalid`
+  String get invalidEmail {
+    return Intl.message(
+      'The email you entered is invalid',
+      name: 'invalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is required`
+  String get passwordRequired {
+    return Intl.message(
+      'Password is required',
+      name: 'passwordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password should be more than six characters`
+  String get invalidPassword {
+    return Intl.message(
+      'Password should be more than six characters',
+      name: 'invalidPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title is required`
+  String get titleRequired {
+    return Intl.message(
+      'Title is required',
+      name: 'titleRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title should be more than four characters`
+  String get maxTitle {
+    return Intl.message(
+      'Title should be more than four characters',
+      name: 'maxTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content is required`
+  String get contentRequired {
+    return Intl.message(
+      'Content is required',
+      name: 'contentRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content should be more than nine characters`
+  String get maxContent {
+    return Intl.message(
+      'Content should be more than nine characters',
+      name: 'maxContent',
       desc: '',
       args: [],
     );

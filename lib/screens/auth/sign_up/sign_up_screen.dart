@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/utils/validator.dart';
@@ -69,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget title() {
     return Text(
-      'Register new\naccount',
+      S.current.alreadyHaveAccount,
       style: kNoteHeadLine.copyWith(color: textBlack),
     );
   }
@@ -88,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
       validator: Validator.email,
-      hintText: 'Email',
+      hintText: S.current.email,
     );
   }
 
@@ -99,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       obscureText: _obscurePassword,
       validator: Validator.password,
       toggle: () => setState(() => _obscurePassword = !_obscurePassword),
-      hintText: 'Password',
+      hintText: S.current.password,
     );
   }
 
@@ -110,24 +111,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
       obscureText: _obscureConfirmPassword,
       validator: (String? value) {
         if (value!.isEmpty) {
-          return 'Please confirm password';
+          return S.current.confirmPassword;
         }
 
         if (_passwordController.text != _confirmPasswordController.text) {
-          return "Passwords do not match";
+          return S.current.passwordsDoNotMatch;
         }
 
         return null;
       },
       toggle: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
-      hintText: 'Confirm Password',
+      hintText: S.current.confirmPassword,
     );
   }
 
   Widget registerButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      text: 'Register',
+      text: S.current.register,
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
@@ -143,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       alignment: Alignment.center,
       child: RichText(
         text: TextSpan(
-          text: 'Already have an account? ',
+          text: S.current.alreadyHaveAccount,
           style: kNoteRegular.copyWith(color: textGrey),
           children: [
             WidgetSpan(
@@ -152,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Navigator.of(context).pushNamed(LoginScreen.routeName);
                 },
                 child: Text(
-                  'Login.',
+                  S.current.login,
                   style: kNoteRegular.copyWith(color: primaryBlue),
                 ),
               ),

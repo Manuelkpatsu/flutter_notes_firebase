@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: AnimatedTextKit(
             repeatForever: true,
             animatedTexts: [
-              RotateAnimatedText(S.current.title.toUpperCase()),
+              RotateAnimatedText(S.current.appTitle.toUpperCase()),
               RotateAnimatedText(S.current.subTitle),
             ],
           ),

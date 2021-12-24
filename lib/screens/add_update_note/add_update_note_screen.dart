@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
@@ -62,7 +63,7 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
       appBar: AppBar(
         backgroundColor: NoteColors.colors[_color],
         title: Text(
-          _edit ? 'Edit Note' : 'Add Note',
+          _edit ? S.current.editNote : S.current.addNote,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.headline5,
@@ -112,8 +113,8 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
         maxLines: null,
         maxLength: 255,
         style: Theme.of(context).textTheme.bodyText2,
-        decoration: const InputDecoration.collapsed(
-          hintText: 'Title',
+        decoration: InputDecoration.collapsed(
+          hintText: S.current.title,
         ),
       ),
     );
@@ -126,8 +127,8 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
         controller: _descriptionController,
         maxLines: null,
         style: Theme.of(context).textTheme.bodyText1,
-        decoration: const InputDecoration.collapsed(
-          hintText: 'Description',
+        decoration: InputDecoration.collapsed(
+          hintText: S.current.description,
         ),
       ),
     );
@@ -140,14 +141,14 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
         if (_descriptionController.text.isNotEmpty && _titleController.text.isNotEmpty) {
           Helper.showSnackbar(
             context,
-            'Note saved successfully',
+            S.current.noteSaved,
             Colors.green,
           );
           Navigator.of(context).pushNamed(HomeScreen.routeName);
         } else {
           Helper.showSnackbar(
             context,
-            'Sorry, fields cannot be empty. Try again',
+            S.current.fieldsCannotBeEmpty,
             Colors.red.shade900,
           );
         }
@@ -161,12 +162,12 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
       onPressed: () {
         Helper.showAlertDialog(
           context,
-          'Do you want to delete the note?',
+          S.current.deleteNote,
           () {
             Navigator.of(context).pop();
             Helper.showSnackbar(
               context,
-              'Note successfully deleted',
+              S.current.successfullyDeleted,
               Colors.green,
             );
           },

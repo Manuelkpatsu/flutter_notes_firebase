@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 class NotePriority {
   const NotePriority._();
 
   static List<String> priorityText = [
-    'Low',
-    'High',
-    'Very High',
+    S.current.low,
+    S.current.high,
+    S.current.veryHigh,
   ];
 
   static List<Color> priorityColor = [

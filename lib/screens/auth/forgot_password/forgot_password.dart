@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/primary_button.dart';
@@ -56,7 +57,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   Widget title() {
     return Text(
-      'Forgot your\npassword',
+      S.current.forgotYourPassword,
       style: kNoteHeadLine.copyWith(color: textBlack),
     );
   }
@@ -75,14 +76,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       inputAction: TextInputAction.done,
       inputType: TextInputType.emailAddress,
       validator: Validator.email,
-      hintText: 'Email',
+      hintText: S.current.email,
     );
   }
 
   Widget submitButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      text: 'Submit',
+      text: S.current.submit,
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {

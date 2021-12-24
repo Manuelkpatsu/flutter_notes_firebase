@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
 import 'package:notesapp/screens/add_update_note/note_arguments.dart';
 import 'package:notesapp/utils/helper.dart';
@@ -88,7 +89,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           );
         },
         icon: Icons.edit_outlined,
-        tooltip: 'Edit Note',
+        tooltip: S.current.editNote,
       ),
     );
   }
@@ -101,8 +102,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         maxLines: null,
         style: Theme.of(context).textTheme.bodyText2,
         readOnly: true,
-        decoration: const InputDecoration.collapsed(
-          hintText: 'Title',
+        decoration: InputDecoration.collapsed(
+          hintText: S.current.title,
         ),
       ),
     );
@@ -133,8 +134,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         maxLines: null,
         style: Theme.of(context).textTheme.bodyText1,
         readOnly: true,
-        decoration: const InputDecoration.collapsed(
-          hintText: 'Description',
+        decoration: InputDecoration.collapsed(
+          hintText: S.current.description,
         ),
       ),
     );
