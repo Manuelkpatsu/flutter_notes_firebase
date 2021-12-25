@@ -1,8 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/styles.dart';
+
+import '../../../locator.dart';
+import 'splash_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash';
@@ -16,11 +18,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    get<SplashBloc>(param1: context);
     super.initState();
-    Future.delayed(
-      const Duration(seconds: 4),
-      () => Navigator.of(context).pushReplacementNamed(LoginScreen.routeName),
-    );
   }
 
   @override
