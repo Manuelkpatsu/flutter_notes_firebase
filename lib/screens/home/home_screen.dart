@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
+import 'package:notesapp/screens/auth/splash/splash.dart';
 import 'package:notesapp/screens/note/note_screen.dart';
-import 'package:notesapp/screens/splash/splash.dart';
 import 'package:notesapp/styles.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';

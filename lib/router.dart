@@ -8,7 +8,7 @@ import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/screens/note/note_screen.dart';
 import 'package:notesapp/screens/search/search_screen.dart';
 
-import 'screens/splash/splash.dart';
+import 'screens/auth/splash/splash.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

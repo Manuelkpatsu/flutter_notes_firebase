@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:notesapp/generated/l10n.dart';
+import 'package:notesapp/screens/auth/splash/splash.dart';
 import 'package:notesapp/screens/home/home_screen.dart';
-import 'package:notesapp/screens/splash/splash.dart';
 
 import '../../locator.dart';
 import '../../router.dart';
