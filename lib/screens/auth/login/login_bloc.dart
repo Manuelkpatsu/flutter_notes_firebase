@@ -7,58 +7,61 @@ import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
 
 import '../auth_flow_coordinator.dart';
-import 'sign_up_event.dart';
-import 'sign_up_model_data.dart';
+import 'login_event.dart';
+import 'login_model_data.dart';
 
-class SignUpBloc extends ValueNotifier<SignUpModelData> {
+class LoginBloc extends ValueNotifier<LoginModelData> {
   final _logger = Logger();
   final BuildContext _context;
-  final StreamController<SignUpEvent> _eventController;
+  final StreamController<LoginEvent> _eventController;
   final UserRepository _userRepository;
   final AuthFlowCoordinator _authFlowCoordinator;
 
-  SignUpBloc(
+  LoginBloc(
     this._context,
     this._eventController,
     this._userRepository,
     this._authFlowCoordinator,
-  ) : super(const SignUpModelData()) {
+  ) : super(const LoginModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
         .onError((error) => _logger.e('Error responding to event', error));
   }
 
   /// Handles [SignUpEvent]
-  void _handleEvent(SignUpEvent event) {
+  void _handleEvent(LoginEvent event) {
     switch (event.runtimeType) {
-      case SignUpUserEvent:
-        final signUpUserEvent = event as SignUpUserEvent;
-        _createNewUser(signUpUserEvent.email, signUpUserEvent.password);
+      case LoginUserEvent:
+        final loginUserEvent = event as LoginUserEvent;
+        _signIn(loginUserEvent.email, loginUserEvent.password);
         break;
-      case GoToLoginScreenEvent:
-        _authFlowCoordinator.goToLoginScreen();
+      case GoToSignUpScreenEvent:
+        _authFlowCoordinator.goToSignUpScreen();
+        break;
+      case GoToForgotPasswordScreenEvent:
+        _authFlowCoordinator.goToForgotPasswordScreen();
         break;
     }
   }
 
-  void _createNewUser(String email, String password) {
-    value = value.copyWith(signingUp: true);
+  void _signIn(String email, String password) {
+    value = value.copyWith(signingIn: true);
 
     _userRepository
-        .registerAccount(email, password)
+        .login(email, password)
         .then(
             (userCredential) => _authFlowCoordinator.goToHomeScreenAfterAuthentication())
-        .whenComplete(() => value = value.copyWith(signingUp: false))
+        .whenComplete(() => value = value.copyWith(signingIn: false))
         .catchError((error) {
       FirebaseAuthException exception = error;
       String? errorMessage;
 
       switch (exception.code) {
-        case 'weak-password':
-          errorMessage = 'The password provided is too weak.';
+        case 'user-not-found':
+          errorMessage = 'No user found for this email';
           break;
-        case 'email-already-in-use':
-          errorMessage = 'The account already exists for that email.';
+        case 'wrong-password':
+          errorMessage = 'Sorry, wrong credentials provided';
           break;
       }
 

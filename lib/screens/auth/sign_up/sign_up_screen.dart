@@ -155,10 +155,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          eventController.add(SignUpUserEvent(
-            _emailController.text.trim(),
-            _passwordController.text.trim(),
-          ));
+          eventController.add(
+            SignUpUserEvent(
+              _emailController.text.trim(),
+              _passwordController.text.trim(),
+            ),
+          );
         }
       },
     );

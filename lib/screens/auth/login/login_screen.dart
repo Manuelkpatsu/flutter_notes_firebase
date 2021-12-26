@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/auth/forgot_password/forgot_password.dart';
-import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
-import 'package:notesapp/screens/home/home_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/password_input_field.dart';
 import 'package:notesapp/widgets/primary_button.dart';
 import 'package:notesapp/widgets/text_input_field.dart';
 
+import '../../../locator.dart';
 import '../../../styles.dart';
+import 'login_bloc.dart';
+import 'login_event.dart';
+import 'login_listenable.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -20,14 +23,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late final LoginBloc bloc;
+  final eventController = StreamController<LoginEvent>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
+  void initState() {
+    bloc = get<LoginBloc>(param1: context, param2: eventController);
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
+    bloc.dispose();
     _emailController.dispose();
     _passwordController.dispose();
   }
@@ -105,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget forgotPassword() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(ForgotPasswordScreen.routeName);
+        eventController.add(GoToForgotPasswordScreenEvent());
       },
       child: Text(
         S.current.forgotPassword,
@@ -117,15 +129,26 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget loginButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      child: Text(
-        S.current.login,
-        style: kNoteHeading5.copyWith(color: Colors.white),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: bloc.progressIndicator,
+        builder: (context, show, child) {
+          return show
+              ? const CircularProgressIndicator()
+              : Text(
+                  S.current.login,
+                  style: kNoteHeading5.copyWith(color: Colors.white),
+                );
+        },
       ),
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+          eventController.add(
+            LoginUserEvent(
+              _emailController.text.trim(),
+              _passwordController.text.trim(),
+            ),
+          );
         }
       },
     );
@@ -142,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
             WidgetSpan(
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                  eventController.add(GoToSignUpScreenEvent());
                 },
                 child: Text(
                   S.current.register,
