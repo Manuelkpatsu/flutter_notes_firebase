@@ -60,9 +60,15 @@ class SignUpBloc extends ValueNotifier<SignUpModelData> {
         case 'email-already-in-use':
           errorMessage = 'The account already exists for that email.';
           break;
+        case 'network-request-failed':
+          errorMessage = 'Make sure you have a stable connection and try again';
+          break;
+        default:
+          errorMessage = 'An error occurred. Please try again';
+          break;
       }
 
-      Helper.showSnackbar(_context, errorMessage!, Colors.red);
+      Helper.showSnackbar(_context, errorMessage, Colors.red);
     });
   }
 

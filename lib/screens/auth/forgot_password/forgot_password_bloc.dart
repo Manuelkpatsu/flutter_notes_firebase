@@ -7,51 +7,45 @@ import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
 
 import '../auth_flow_coordinator.dart';
-import 'login_event.dart';
-import 'login_model_data.dart';
+import 'forgot_password_event.dart';
+import 'forgot_password_model_data.dart';
 
-class LoginBloc extends ValueNotifier<LoginModelData> {
+class ForgotPasswordBloc extends ValueNotifier<ForgotPasswordModelData> {
   final _logger = Logger();
   final BuildContext _context;
-  final StreamController<LoginEvent> _eventController;
+  final StreamController<ForgotPasswordEvent> _eventController;
   final UserRepository _userRepository;
   final AuthFlowCoordinator _authFlowCoordinator;
 
-  LoginBloc(
+  ForgotPasswordBloc(
     this._context,
     this._eventController,
     this._userRepository,
     this._authFlowCoordinator,
-  ) : super(const LoginModelData()) {
+  ) : super(const ForgotPasswordModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
         .onError((error) => _logger.e('Error responding to event', error));
   }
 
-  /// Handles [LoginEvent]
-  void _handleEvent(LoginEvent event) {
+  /// Handles [ForgotPasswordEvent]
+  void _handleEvent(ForgotPasswordEvent event) {
     switch (event.runtimeType) {
-      case LoginUserEvent:
-        final loginUserEvent = event as LoginUserEvent;
-        _signIn(loginUserEvent.email, loginUserEvent.password);
-        break;
-      case GoToSignUpScreenEvent:
-        _authFlowCoordinator.goToSignUpScreen();
-        break;
-      case GoToForgotPasswordScreenEvent:
-        _authFlowCoordinator.goToForgotPasswordScreen();
+      case ResetPasswordEvent:
+        final resetPasswordEvent = event as ResetPasswordEvent;
+        _resetPassword(resetPasswordEvent.email);
         break;
     }
   }
 
-  void _signIn(String email, String password) {
-    value = value.copyWith(signingIn: true);
+  void _resetPassword(String email) {
+    value = value.copyWith(requestingResetPasswordLink: true);
 
     _userRepository
-        .login(email, password)
-        .then(
-            (userCredential) => _authFlowCoordinator.goToHomeScreenAfterAuthentication())
-        .whenComplete(() => value = value.copyWith(signingIn: false))
+        .resetPassword(email)
+        .then((userCredential) =>
+            _authFlowCoordinator.goToLoginScreenAfterRequestingPasswordChangeLink())
+        .whenComplete(() => value = value.copyWith(requestingResetPasswordLink: false))
         .catchError((error) {
       FirebaseAuthException exception = error;
       String? errorMessage;
@@ -59,9 +53,6 @@ class LoginBloc extends ValueNotifier<LoginModelData> {
       switch (exception.code) {
         case 'user-not-found':
           errorMessage = 'No user found for this email';
-          break;
-        case 'wrong-password':
-          errorMessage = 'Sorry, wrong credentials provided';
           break;
         case 'network-request-failed':
           errorMessage = 'Make sure you have a stable connection and try again';

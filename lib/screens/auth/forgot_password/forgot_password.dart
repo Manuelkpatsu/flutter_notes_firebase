@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/primary_button.dart';
 import 'package:notesapp/widgets/text_input_field.dart';
 
+import '../../../locator.dart';
 import '../../../styles.dart';
+import 'forgot_password_bloc.dart';
+import 'forgot_password_event.dart';
+import 'forgot_password_listenable.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static const routeName = '/forgot_password';
@@ -17,11 +22,20 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  late final ForgotPasswordBloc bloc;
+  final eventController = StreamController<ForgotPasswordEvent>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
 
   @override
+  void initState() {
+    bloc = get<ForgotPasswordBloc>(param1: context, param2: eventController);
+    super.initState();
+  }
+
+  @override
   void dispose() {
+    bloc.dispose();
     _emailController.dispose();
     super.dispose();
   }
@@ -83,14 +97,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget submitButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      child: Text(
-        S.current.submit,
-        style: kNoteHeading5.copyWith(color: Colors.white),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: bloc.progressIndicator,
+        builder: (context, show, child) {
+          return show
+              ? const CircularProgressIndicator()
+              : Text(
+                  S.current.submit,
+                  style: kNoteHeading5.copyWith(color: Colors.white),
+                );
+        },
       ),
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          Navigator.of(context).pushNamed(LoginScreen.routeName);
+          eventController.add(ResetPasswordEvent(_emailController.text.trim()));
         }
       },
     );

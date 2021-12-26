@@ -7,6 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'repository/user_repository.dart';
 import 'screens/app_entry/app_entry_bloc.dart';
 import 'screens/auth/auth_flow_coordinator.dart';
+import 'screens/auth/forgot_password/forgot_password_bloc.dart';
+import 'screens/auth/forgot_password/forgot_password_event.dart';
 import 'screens/auth/login/login_bloc.dart';
 import 'screens/auth/login/login_event.dart';
 import 'screens/auth/sign_up/sign_up_bloc.dart';
@@ -44,6 +46,17 @@ void setUpLocator() {
   // LoginScreen
   get.registerFactoryParam<LoginBloc, BuildContext, StreamController<LoginEvent>>(
     (context, eventController) => LoginBloc(
+      context,
+      eventController,
+      get<UserRepository>(),
+      get<MyAuthFlowCoordinator>(param1: context),
+    ),
+  );
+
+  // ForgotPasswordScreen
+  get.registerFactoryParam<ForgotPasswordBloc, BuildContext,
+      StreamController<ForgotPasswordEvent>>(
+    (context, eventController) => ForgotPasswordBloc(
       context,
       eventController,
       get<UserRepository>(),

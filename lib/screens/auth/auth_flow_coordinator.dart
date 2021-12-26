@@ -20,7 +20,7 @@ abstract class AuthFlowCoordinator {
 
   /// Navigates to [LoginScreen] after entering email for
   /// changing password on [ForgotPasswordScreen]
-  void goToLoginScreenAfterPasswordChange();
+  void goToLoginScreenAfterRequestingPasswordChangeLink();
 
   // Navigates to [HomeScreen] after signing in or signing up
   void goToHomeScreenAfterAuthentication();
@@ -56,7 +56,7 @@ class MyAuthFlowCoordinator implements AuthFlowCoordinator {
   }
 
   @override
-  void goToLoginScreenAfterPasswordChange() {
+  void goToLoginScreenAfterRequestingPasswordChangeLink() {
     Navigator.pushReplacementNamed(_context, LoginScreen.routeName);
   }
 
