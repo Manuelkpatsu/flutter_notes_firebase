@@ -117,7 +117,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget loginButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      text: S.current.login,
+      child: Text(
+        S.current.login,
+        style: kNoteHeading5.copyWith(color: Colors.white),
+      ),
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:notesapp/screens/home/home_screen.dart';
 
 import 'forgot_password/forgot_password.dart';
 
@@ -17,7 +18,12 @@ abstract class AuthFlowCoordinator {
   // Navigates to [ForgotPasswordScreen]
   void goToForgotPasswordScreen();
 
+  /// Navigates to [LoginScreen] after entering email for
+  /// changing password on [ForgotPasswordScreen]
   void goToLoginScreenAfterPasswordChange();
+
+  // Navigates to [HomeScreen] after signing in or signing up
+  void goToHomeScreenAfterAuthentication();
 }
 
 class MyAuthFlowCoordinator implements AuthFlowCoordinator {
@@ -52,5 +58,14 @@ class MyAuthFlowCoordinator implements AuthFlowCoordinator {
   @override
   void goToLoginScreenAfterPasswordChange() {
     Navigator.pushReplacementNamed(_context, LoginScreen.routeName);
+  }
+
+  @override
+  void goToHomeScreenAfterAuthentication() {
+    Navigator.pushNamedAndRemoveUntil(
+      _context,
+      HomeScreen.routeName,
+      (route) => false,
+    );
   }
 }

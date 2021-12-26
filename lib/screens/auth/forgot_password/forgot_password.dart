@@ -83,7 +83,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget submitButton() {
     return CustomButton(
       buttonColor: primaryBlue,
-      text: S.current.submit,
+      child: Text(
+        S.current.submit,
+        style: kNoteHeading5.copyWith(color: Colors.white),
+      ),
       textColor: Colors.white,
       onPressed: () {
         if (_formKey.currentState!.validate()) {

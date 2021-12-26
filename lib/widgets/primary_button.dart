@@ -4,14 +4,14 @@ import '../styles.dart';
 
 class CustomButton extends StatelessWidget {
   final Color buttonColor;
-  final String text;
+  final Widget child;
   final Color textColor;
   final VoidCallback onPressed;
 
   const CustomButton({
     Key? key,
     required this.buttonColor,
-    required this.text,
+    required this.child,
     required this.textColor,
     required this.onPressed,
   }) : super(key: key);
@@ -23,10 +23,7 @@ class CustomButton extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: kNoteHeading5.copyWith(color: textColor),
-        ),
+        child: child,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           primary: buttonColor,
