@@ -3,6 +3,7 @@ import 'package:notesapp/screens/auth/splash/splash.dart';
 import 'package:notesapp/screens/note/add_update_note/add_update_note_screen.dart';
 import 'package:notesapp/screens/note/view_note/view_note_argument.dart';
 
+import 'home/home_screen.dart';
 import 'search/search_screen.dart';
 import 'view_note/view_note_screen.dart';
 
@@ -21,6 +22,12 @@ abstract class NoteFlowCoordinator {
 
   // Navigates to add note screen
   void goToAddNoteScreen();
+
+  // Navigates to home screen after deletion
+  void goToHomeScreenAfterDeletion();
+
+  // Navigates to update note screen
+  void goToUpdateNoteScreen();
 }
 
 class MyNoteFlowCoordinator implements NoteFlowCoordinator {
@@ -61,6 +68,22 @@ class MyNoteFlowCoordinator implements NoteFlowCoordinator {
 
   @override
   void goToAddNoteScreen() {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (context) => const AddUpdateNoteScreen()),
+    );
+  }
+
+  @override
+  void goToHomeScreenAfterDeletion() {
+    Navigator.pushReplacement(
+      _context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  }
+
+  @override
+  void goToUpdateNoteScreen() {
     Navigator.push(
       _context,
       MaterialPageRoute(builder: (context) => const AddUpdateNoteScreen()),

@@ -43,6 +43,6 @@ class Note {
 
   String getDate(Timestamp timestamp) {
     return DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch)
-        .toString();
+        .toIso8601String();
   }
 }

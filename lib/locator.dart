@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tuple/tuple.dart';
 
 import 'repository/note_repository.dart';
 import 'repository/user_repository.dart';
@@ -22,6 +23,9 @@ import 'screens/note/home/home_event.dart';
 import 'screens/note/home/home_tile_bloc.dart';
 import 'screens/note/home/home_tile_event.dart';
 import 'screens/note/note_flow_coordinator.dart';
+import 'screens/note/view_note/view_note_bloc.dart';
+import 'screens/note/view_note/view_note_domain_model.dart';
+import 'screens/note/view_note/view_note_event.dart';
 
 final GetIt get = GetIt.instance;
 
@@ -91,6 +95,19 @@ void setUpLocator() {
     (context, eventController) => HomeTileBloc(
       eventController,
       get<MyNoteFlowCoordinator>(param1: context),
+    ),
+  );
+
+  // ViewNoteScreen
+  get.registerFactory(() => ViewNoteDomainModel(get<NoteRepository>()));
+  get.registerFactoryParam<ViewNoteBloc, BuildContext,
+      Tuple2<StreamController<ViewNoteEvent>, String>>(
+    (context, tuple) => ViewNoteBloc(
+      context,
+      tuple.item1,
+      tuple.item2,
+      get<ViewNoteDomainModel>(),
+      MyNoteFlowCoordinator(context),
     ),
   );
 }

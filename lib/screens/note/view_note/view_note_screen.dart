@@ -1,25 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/note/add_update_note/add_update_note_screen.dart';
-import 'package:notesapp/screens/note/add_update_note/note_arguments.dart';
 import 'package:notesapp/screens/note/view_note/view_note_argument.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/widgets/color_picker.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/widgets/priority_picker.dart';
+import 'package:tuple/tuple.dart';
 
+import '../../../locator.dart';
 import '../../../styles.dart';
+import 'view_note_bloc.dart';
+import 'view_note_event.dart';
+import 'view_note_listenable.dart';
 
 class ViewNoteScreen extends StatefulWidget {
   final ViewNoteArgument argument;
-  int color;
 
   static const routeName = '/note';
 
   ViewNoteScreen({
     Key? key,
-    this.color = 2,
     required this.argument,
   }) : super(key: key);
 
@@ -28,86 +31,92 @@ class ViewNoteScreen extends StatefulWidget {
 }
 
 class _ViewNoteScreenState extends State<ViewNoteScreen> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  late final ViewNoteBloc bloc;
+  final eventController = StreamController<ViewNoteEvent>();
 
   @override
   void initState() {
+    bloc = get<ViewNoteBloc>(
+      param1: context,
+      param2: Tuple2(eventController, widget.argument.noteId),
+    );
     super.initState();
-    _titleController = TextEditingController(text: 'Learn a programming language');
-    _descriptionController = TextEditingController(
-        text: 'Learn a new programming language. React will be a best fit for me.');
   }
 
   @override
   void dispose() {
     super.dispose();
-    _titleController.dispose();
-    _descriptionController.dispose();
+    bloc.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: NoteColors.colors[widget.color],
-      appBar: AppBar(
-        backgroundColor: NoteColors.colors[widget.color],
-        title: Text(
-          _titleController.text,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PriorityPicker(
-              selectedIndex: 0,
+    return ValueListenableBuilder<int>(
+      valueListenable: bloc.color,
+      builder: (context, color, child) {
+        return Scaffold(
+          backgroundColor: NoteColors.colors[color],
+          appBar: AppBar(
+            backgroundColor: NoteColors.colors[color],
+            title: ValueListenableBuilder<String>(
+              valueListenable: bloc.title,
+              builder: (context, title, child) {
+                return Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline5,
+                );
+              },
             ),
-            ColorPicker(
-              selectedIndex: widget.color,
+            actions: [deleteNote()],
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ValueListenableBuilder<int>(
+                  valueListenable: bloc.priority,
+                  builder: (context, priority, child) {
+                    return PriorityPicker(
+                      selectedIndex: priority,
+                    );
+                  },
+                ),
+                ColorPicker(
+                  selectedIndex: color,
+                ),
+                titleText(),
+                const SizedBox(height: 5),
+                date(),
+                descriptionText(),
+              ],
             ),
-            titleTextField(),
-            const SizedBox(height: 5),
-            date(),
-            descriptionTextField(),
-          ],
-        ),
-      ),
-      floatingActionButton: CustomFloatingActionButton(
-        onPressed: () {
-          NoteArguments noteArguments = NoteArguments(
-            title: _titleController.text,
-            description: _descriptionController.text,
-            priority: 2,
-            color: widget.color,
-          );
-
-          Navigator.of(context).pushNamed(
-            AddUpdateNoteScreen.routeName,
-            arguments: noteArguments,
-          );
-        },
-        icon: Icons.edit_outlined,
-        tooltip: S.current.editNote,
-      ),
+          ),
+          floatingActionButton: CustomFloatingActionButton(
+            onPressed: () {
+              eventController.add(EditNoteEvent());
+            },
+            icon: Icons.edit_outlined,
+            tooltip: S.current.editNote,
+          ),
+        );
+      },
     );
   }
 
-  Widget titleTextField() {
+  Widget titleText() {
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-      child: TextField(
-        controller: _titleController,
-        maxLines: null,
-        style: Theme.of(context).textTheme.bodyText2,
-        readOnly: true,
-        decoration: InputDecoration.collapsed(
-          hintText: S.current.title,
-        ),
+      child: ValueListenableBuilder<String>(
+        valueListenable: bloc.title,
+        builder: (context, title, child) {
+          return Text(
+            title,
+            style: Theme.of(context).textTheme.bodyText2,
+          );
+        },
       ),
     );
   }
@@ -120,27 +129,40 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
         children: [
           const Icon(Icons.access_time_rounded),
           const SizedBox(width: 5),
-          Text(
-            Helper.formatDateTimeAndDisplayWithTime('2021-12-23T04:59:07.389+00:00'),
-            style: kNoteSubTitle,
-          )
+          ValueListenableBuilder<String>(
+              valueListenable: bloc.date,
+              builder: (context, date, child) {
+                return Text(
+                  Helper.formatDateTimeAndDisplayWithTime(date),
+                  style: kNoteSubTitle,
+                );
+              }),
         ],
       ),
     );
   }
 
-  Widget descriptionTextField() {
+  Widget descriptionText() {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: TextField(
-        controller: _descriptionController,
-        maxLines: null,
-        style: Theme.of(context).textTheme.bodyText1,
-        readOnly: true,
-        decoration: InputDecoration.collapsed(
-          hintText: S.current.description,
-        ),
+      child: ValueListenableBuilder<String>(
+        valueListenable: bloc.description,
+        builder: (context, description, child) {
+          return Text(
+            description,
+            style: Theme.of(context).textTheme.bodyText1,
+          );
+        },
       ),
+    );
+  }
+
+  Widget deleteNote() {
+    return IconButton(
+      icon: const Icon(Icons.delete_outlined),
+      onPressed: () {
+        eventController.add(DeleteNoteEvent());
+      },
     );
   }
 }

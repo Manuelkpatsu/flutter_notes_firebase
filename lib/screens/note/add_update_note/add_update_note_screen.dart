@@ -69,13 +69,7 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
           style: Theme.of(context).textTheme.headline5,
         ),
         centerTitle: true,
-        actions: [
-          saveNote(),
-          Visibility(
-            visible: _edit,
-            child: deleteNote(),
-          ),
-        ],
+        actions: [saveNote()],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -152,26 +146,6 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
             Colors.red.shade900,
           );
         }
-      },
-    );
-  }
-
-  Widget deleteNote() {
-    return IconButton(
-      icon: const Icon(Icons.delete_outlined),
-      onPressed: () {
-        Helper.showAlertDialog(
-          context,
-          S.current.deleteNote,
-          () {
-            Navigator.of(context).pop();
-            Helper.showSnackbar(
-              context,
-              S.current.successfullyDeleted,
-              Colors.green,
-            );
-          },
-        );
       },
     );
   }
