@@ -63,11 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       actions: [
-        IconButton(
-          splashRadius: 30,
-          icon: const Icon(Icons.grid_view_outlined),
-          onPressed: () {},
-        ),
         menuButton(),
       ],
     );

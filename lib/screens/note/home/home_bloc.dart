@@ -39,10 +39,6 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
       case GoToSearchScreenEvent:
         _noteFlowCoordinator.goToSearchScreen();
         break;
-      case ToggleLayoutEvent:
-        final toggleEvent = event as ToggleLayoutEvent;
-        _toggleLayout(toggleEvent.isGrid);
-        break;
       case LogoutEvent:
         _logout();
         break;
@@ -69,10 +65,6 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
     }).whenComplete(() {
       value = value.copyWith(loading: false);
     });
-  }
-
-  void _toggleLayout(bool isGrid) {
-    isGrid = !value.isGrid;
   }
 
   void _logout() {
