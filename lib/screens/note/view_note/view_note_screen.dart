@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
-import 'package:notesapp/screens/add_update_note/note_arguments.dart';
+import 'package:notesapp/screens/note/add_update_note/add_update_note_screen.dart';
+import 'package:notesapp/screens/note/add_update_note/note_arguments.dart';
+import 'package:notesapp/screens/note/view_note/view_note_argument.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/widgets/color_picker.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/widgets/priority_picker.dart';
 
-import '../../styles.dart';
+import '../../../styles.dart';
 
-class NoteDetailScreen extends StatefulWidget {
+class ViewNoteScreen extends StatefulWidget {
+  final ViewNoteArgument argument;
   int color;
 
   static const routeName = '/note';
 
-  NoteDetailScreen({
+  ViewNoteScreen({
     Key? key,
     this.color = 2,
+    required this.argument,
   }) : super(key: key);
 
   @override
-  _NoteDetailScreenState createState() => _NoteDetailScreenState();
+  _ViewNoteScreenState createState() => _ViewNoteScreenState();
 }
 
-class _NoteDetailScreenState extends State<NoteDetailScreen> {
+class _ViewNoteScreenState extends State<ViewNoteScreen> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 

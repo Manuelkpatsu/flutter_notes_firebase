@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/screens/auth/login/login_screen.dart';
 import 'package:notesapp/screens/auth/sign_up/sign_up_screen.dart';
-import 'package:notesapp/screens/home/home_screen.dart';
+import 'package:notesapp/screens/note/home/home_screen.dart';
 
 import 'forgot_password/forgot_password.dart';
 
@@ -52,19 +52,25 @@ class MyAuthFlowCoordinator implements AuthFlowCoordinator {
 
   @override
   void goToSignUpScreen() {
-    Navigator.pushNamed(_context, SignUpScreen.routeName);
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (context) => const SignUpScreen()),
+    );
   }
 
   @override
   void goToLoginScreenAfterRequestingPasswordChangeLink() {
-    Navigator.pushReplacementNamed(_context, LoginScreen.routeName);
+    Navigator.pushReplacement(
+      _context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
   void goToHomeScreenAfterAuthentication() {
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
       _context,
-      HomeScreen.routeName,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
       (route) => false,
     );
   }

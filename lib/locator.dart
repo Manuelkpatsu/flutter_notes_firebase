@@ -16,6 +16,12 @@ import 'screens/auth/login/login_event.dart';
 import 'screens/auth/sign_up/sign_up_bloc.dart';
 import 'screens/auth/sign_up/sign_up_event.dart';
 import 'screens/auth/splash/splash_bloc.dart';
+import 'screens/note/home/home_bloc.dart';
+import 'screens/note/home/home_domain_model.dart';
+import 'screens/note/home/home_event.dart';
+import 'screens/note/home/home_tile_bloc.dart';
+import 'screens/note/home/home_tile_event.dart';
+import 'screens/note/note_flow_coordinator.dart';
 
 final GetIt get = GetIt.instance;
 
@@ -24,6 +30,9 @@ void setUpLocator() {
   get.registerFactory(() => NoteRepository(FirebaseFirestore.instance));
   get.registerFactoryParam<MyAuthFlowCoordinator, BuildContext, void>(
     (context, _) => MyAuthFlowCoordinator(context),
+  );
+  get.registerFactoryParam<MyNoteFlowCoordinator, BuildContext, void>(
+    (context, _) => MyNoteFlowCoordinator(context),
   );
 
   // AppEntryScreen
@@ -64,6 +73,24 @@ void setUpLocator() {
       eventController,
       get<UserRepository>(),
       get<MyAuthFlowCoordinator>(param1: context),
+    ),
+  );
+
+  // HomeScreen
+  get.registerFactory(() => HomeDomainModel(get<NoteRepository>()));
+  get.registerFactoryParam<HomeBloc, BuildContext, StreamController<HomeEvent>>(
+    (context, eventController) => HomeBloc(
+      context,
+      eventController,
+      get<HomeDomainModel>(),
+      get<UserRepository>(),
+      get<MyNoteFlowCoordinator>(param1: context),
+    ),
+  );
+  get.registerFactoryParam<HomeTileBloc, BuildContext, StreamController<HomeTileEvent>>(
+    (context, eventController) => HomeTileBloc(
+      eventController,
+      get<MyNoteFlowCoordinator>(param1: context),
     ),
   );
 }

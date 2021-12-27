@@ -41,7 +41,8 @@ class Note {
     };
   }
 
-  DateTime getDate(Timestamp timestamp) {
-    return DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+  String getDate(Timestamp timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch)
+        .toString();
   }
 }

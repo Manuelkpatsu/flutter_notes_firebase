@@ -3,10 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/screens/auth/splash/splash.dart';
-import 'package:notesapp/screens/home/home_screen.dart';
+import 'package:notesapp/screens/note/home/home_screen.dart';
 
 import '../../locator.dart';
-import '../../router.dart';
 import '../../styles.dart';
 import 'app_entry_bloc.dart';
 import 'app_entry_listenable.dart';
@@ -60,7 +59,6 @@ class _AppEntryScreenState extends State<AppEntryScreen> {
         builder: (context, isSignedIn, child) =>
             isSignedIn ? const HomeScreen() : const SplashScreen(),
       ),
-      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }

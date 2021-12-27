@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/screens/home/home_screen.dart';
+import 'package:notesapp/screens/note/home/home_screen.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:notesapp/utils/note_colors.dart';
 import 'package:notesapp/widgets/color_picker.dart';

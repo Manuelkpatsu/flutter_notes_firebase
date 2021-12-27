@@ -1,15 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:notesapp/screens/add_update_note/add_update_note_screen.dart';
-import 'package:notesapp/screens/auth/splash/splash.dart';
-import 'package:notesapp/screens/note/note_screen.dart';
+import 'package:notesapp/screens/note/home/home_model_data.dart';
+import 'package:notesapp/screens/note/home/home_tile.dart';
 import 'package:notesapp/styles.dart';
-import 'package:notesapp/utils/helper.dart';
-import 'package:notesapp/utils/note_colors.dart';
-import 'package:notesapp/utils/note_priority.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
-import 'package:notesapp/widgets/note_tile.dart';
 import 'package:notesapp/generated/l10n.dart';
+import 'package:notesapp/widgets/empty_state.dart';
+import 'package:notesapp/widgets/error_state.dart';
+
+import '../../../locator.dart';
+import 'home_bloc.dart';
+import 'home_event.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -21,6 +24,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final HomeBloc bloc;
+  final eventController = StreamController<HomeEvent>();
+
+  @override
+  void initState() {
+    bloc = get<HomeBloc>(param1: context, param2: eventController);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
       leading: IconButton(
         splashRadius: 30,
         icon: const Icon(Icons.search),
-        onPressed: () {},
+        onPressed: () {
+          eventController.add(GoToSearchScreenEvent());
+        },
       ),
       actions: [
         IconButton(
@@ -88,31 +108,40 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget notesList() {
-    return StaggeredGridView.countBuilder(
-      physics: const BouncingScrollPhysics(),
-      crossAxisCount: 4,
-      itemCount: 10,
-      itemBuilder: (BuildContext context, int index) {
-        return NoteTile(
-          onPressed: () => Navigator.of(context).pushNamed(NoteDetailScreen.routeName),
-          title: 'Notes App',
-          description: 'Build an awesome note taking app',
-          priority: NotePriority.getPriorityText(1),
-          priorityColor: NotePriority.getPriorityColor(1),
-          color: NoteColors.colors[1],
-          date: '2021-12-23T04:59:07.389+00:00',
-        );
+    return ValueListenableBuilder<HomeModelData>(
+      valueListenable: bloc,
+      builder: (context, modelData, child) {
+        if (modelData.message.isNotEmpty) {
+          return ErrorState(text: modelData.message);
+        } else if (modelData.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (modelData.notes.isEmpty) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return StaggeredGridView.countBuilder(
+            physics: const BouncingScrollPhysics(),
+            crossAxisCount: 4,
+            itemCount: modelData.notes.length,
+            itemBuilder: (BuildContext context, int index) {
+              return HomeTile(context, modelData.notes[index]);
+            },
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(2),
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
+          );
+        }
       },
-      staggeredTileBuilder: (int index) => const StaggeredTile.fit(2),
-      mainAxisSpacing: 4.0,
-      crossAxisSpacing: 4.0,
     );
   }
 
   Widget addNoteButton() {
     return CustomFloatingActionButton(
       onPressed: () {
-        Navigator.of(context).pushNamed(AddUpdateNoteScreen.routeName);
+        eventController.add(GoToAddNoteScreenEvent());
       },
       tooltip: S.current.addNote,
       icon: Icons.add,
@@ -120,19 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void logout() {
-    Helper.showAlertDialog(
-      context,
-      S.current.wantToLogOut,
-          () {
-        Navigator.of(context).pop();
-        Helper.showSnackbar(
-          context,
-          S.current.loggedOutSuccessfully,
-          Colors.green,
-        );
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(SplashScreen.routeName, (route) => false);
-      },
-    );
+    eventController.add(LogoutEvent());
   }
 }
