@@ -25,6 +25,11 @@ import 'screens/note/home/home_event.dart';
 import 'screens/note/home/home_tile_bloc.dart';
 import 'screens/note/home/home_tile_event.dart';
 import 'screens/note/note_flow_coordinator.dart';
+import 'screens/note/search/search_bloc.dart';
+import 'screens/note/search/search_domain_model.dart';
+import 'screens/note/search/search_event.dart';
+import 'screens/note/search/search_note_tile_bloc.dart';
+import 'screens/note/search/search_note_tile_event.dart';
 import 'screens/note/view_note/view_note_bloc.dart';
 import 'screens/note/view_note/view_note_domain_model.dart';
 import 'screens/note/view_note/view_note_event.dart';
@@ -120,6 +125,24 @@ void setUpLocator() {
       context,
       eventController,
       get<NoteRepository>(),
+      get<MyNoteFlowCoordinator>(param1: context),
+    ),
+  );
+
+  // SearchScreen
+  get.registerFactory(() => SearchDomainModel(get<NoteRepository>()));
+  get.registerFactoryParam<SearchBloc, BuildContext, StreamController<SearchEvent>>(
+    (context, eventController) => SearchBloc(
+      context,
+      eventController,
+      get<UserRepository>(),
+      get<SearchDomainModel>(),
+    ),
+  );
+  get.registerFactoryParam<SearchNoteTileBloc, BuildContext,
+      StreamController<SearchNoteTileEvent>>(
+    (context, eventController) => SearchNoteTileBloc(
+      eventController,
       get<MyNoteFlowCoordinator>(param1: context),
     ),
   );

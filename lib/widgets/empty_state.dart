@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../styles.dart';
 
 class EmptyState extends StatelessWidget {
-  const EmptyState({Key? key}) : super(key: key);
+  final String info;
+
+  const EmptyState({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class EmptyState extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 5),
-            const Text(
-              'Empty notes.\nClick on + button to add notes.',
+            Text(
+              info,
               textAlign: TextAlign.center,
               style: kNoteBodyText1,
             ),
