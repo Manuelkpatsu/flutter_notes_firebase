@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:notesapp/styles.dart';
@@ -67,5 +68,10 @@ class Helper {
     var formatter = DateFormat('MMMM dd, yyyy hh:mm a');
     DateTime dt = DateTime.parse(dateTime);
     return formatter.format(dt);
+  }
+
+  static Timestamp formatStringDateToTimestamp(String date) {
+    DateTime dt = DateTime.parse(date);
+    return Timestamp.fromMillisecondsSinceEpoch(dt.millisecondsSinceEpoch);
   }
 }

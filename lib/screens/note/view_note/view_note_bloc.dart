@@ -65,7 +65,8 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
         _removePaymentMethod();
         break;
       case EditNoteEvent:
-        _noteFlowCoordinator.goToUpdateNoteScreen();
+        final editNoteEvent = event as EditNoteEvent;
+        _noteFlowCoordinator.goToUpdateNoteScreen(editNoteEvent.arguments);
         break;
     }
   }

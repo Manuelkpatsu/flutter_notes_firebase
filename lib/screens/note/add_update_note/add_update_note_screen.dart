@@ -26,7 +26,7 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   int _color = 0;
-  late int _priority = 3;
+  int _priority = 3;
   bool _edit = false;
 
   @override
@@ -34,11 +34,11 @@ class _AddUpdateNoteScreenState extends State<AddUpdateNoteScreen> {
     super.initState();
     if (widget.noteArguments != null) {
       setState(() {
-        _titleController = TextEditingController(text: widget.noteArguments!.title);
+        _titleController = TextEditingController(text: widget.noteArguments!.note!.title);
         _descriptionController =
-            TextEditingController(text: widget.noteArguments!.description);
-        _color = widget.noteArguments!.color;
-        _priority = widget.noteArguments!.priority;
+            TextEditingController(text: widget.noteArguments!.note!.description);
+        _color = widget.noteArguments!.note!.color;
+        _priority = widget.noteArguments!.note!.priority;
         _edit = true;
       });
     } else {

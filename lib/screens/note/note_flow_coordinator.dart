@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/screens/auth/splash/splash.dart';
 import 'package:notesapp/screens/note/add_update_note/add_update_note_screen.dart';
+import 'package:notesapp/screens/note/add_update_note/note_arguments.dart';
 import 'package:notesapp/screens/note/view_note/view_note_argument.dart';
 
 import 'home/home_screen.dart';
@@ -27,7 +28,7 @@ abstract class NoteFlowCoordinator {
   void goToHomeScreenAfterDeletion();
 
   // Navigates to update note screen
-  void goToUpdateNoteScreen();
+  void goToUpdateNoteScreen(NoteArguments arguments);
 }
 
 class MyNoteFlowCoordinator implements NoteFlowCoordinator {
@@ -83,10 +84,11 @@ class MyNoteFlowCoordinator implements NoteFlowCoordinator {
   }
 
   @override
-  void goToUpdateNoteScreen() {
+  void goToUpdateNoteScreen(NoteArguments arguments) {
     Navigator.push(
       _context,
-      MaterialPageRoute(builder: (context) => const AddUpdateNoteScreen()),
+      MaterialPageRoute(
+          builder: (context) => AddUpdateNoteScreen(noteArguments: arguments)),
     );
   }
 }
