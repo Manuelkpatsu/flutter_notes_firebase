@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:notesapp/utils/helper.dart';
 
 class Note {
-  final String id;
+  final String? id;
   final String title;
   final String userId;
   final String description;
   final int color;
   final int priority;
-  final Timestamp createdAt;
+  final Timestamp? createdAt;
 
   Note({
-    required this.id,
+    this.id,
     required this.title,
     required this.userId,
     required this.description,
     required this.color,
     required this.priority,
-    required this.createdAt,
+    this.createdAt,
   });
 
   Note.fromSnapshot(id, Map<String, dynamic> json)
@@ -37,7 +38,8 @@ class Note {
       'userId': userId,
       'color': color,
       'priority': priority,
-      'createdAt': createdAt,
+      'createdAt': createdAt ??
+          Helper.formatStringDateToTimestamp(DateTime.now().toIso8601String()),
     };
   }
 

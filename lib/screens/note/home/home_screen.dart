@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notesapp/screens/note/add_update_note/note_arguments.dart';
 import 'package:notesapp/screens/note/home/home_model_data.dart';
 import 'package:notesapp/screens/note/home/home_tile.dart';
 import 'package:notesapp/styles.dart';
@@ -9,6 +10,7 @@ import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/widgets/empty_state.dart';
 import 'package:notesapp/widgets/error_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../locator.dart';
 import 'home_bloc.dart';
@@ -26,10 +28,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final HomeBloc bloc;
   final eventController = StreamController<HomeEvent>();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  String? _userId;
 
   @override
   void initState() {
     bloc = get<HomeBloc>(param1: context, param2: eventController);
+    _prefs.then((SharedPreferences prefs) {
+      _userId = prefs.getString('userId');
+    });
     super.initState();
   }
 
@@ -134,13 +141,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget addNoteButton() {
-    return CustomFloatingActionButton(
-      onPressed: () {
-        eventController.add(GoToAddNoteScreenEvent());
-      },
-      tooltip: S.current.addNote,
-      icon: Icons.add,
-    );
+    return ValueListenableBuilder<HomeModelData>(
+        valueListenable: bloc,
+        builder: (context, modelData, child) {
+          return CustomFloatingActionButton(
+            onPressed: () {
+              eventController
+                  .add(GoToAddNoteScreenEvent(NoteArguments(userId: _userId)));
+            },
+            tooltip: S.current.addNote,
+            icon: Icons.add,
+          );
+        });
   }
 
   void logout() {

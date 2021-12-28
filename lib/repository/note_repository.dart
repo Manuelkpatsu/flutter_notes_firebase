@@ -11,7 +11,7 @@ class NoteRepository {
   Future<List<Note>> getNoteList(String currentUserId) {
     return _firestore
         .collection(noteCollection)
-        .orderBy('createdAt')
+        .orderBy('createdAt', descending: true)
         .where('userId', isEqualTo: currentUserId)
         .get()
         .then((snap) => snap.docs

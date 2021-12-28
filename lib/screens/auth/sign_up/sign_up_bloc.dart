@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth_flow_coordinator.dart';
 import 'sign_up_event.dart';
@@ -12,6 +13,7 @@ import 'sign_up_model_data.dart';
 
 class SignUpBloc extends ValueNotifier<SignUpModelData> {
   final _logger = Logger();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final BuildContext _context;
   final StreamController<SignUpEvent> _eventController;
   final UserRepository _userRepository;
@@ -46,30 +48,34 @@ class SignUpBloc extends ValueNotifier<SignUpModelData> {
 
     _userRepository
         .registerAccount(email, password)
-        .then(
-            (userCredential) => _authFlowCoordinator.goToHomeScreenAfterAuthentication())
+        .then((userCredential) {
+          _prefs.then((SharedPreferences prefs) {
+            prefs.setString('userId', userCredential.user!.uid);
+            _authFlowCoordinator.goToHomeScreenAfterAuthentication();
+          });
+        })
         .whenComplete(() => value = value.copyWith(signingUp: false))
         .catchError((error) {
-      FirebaseAuthException exception = error;
-      String? errorMessage;
+          FirebaseAuthException exception = error;
+          String? errorMessage;
 
-      switch (exception.code) {
-        case 'weak-password':
-          errorMessage = 'The password provided is too weak.';
-          break;
-        case 'email-already-in-use':
-          errorMessage = 'The account already exists for that email.';
-          break;
-        case 'network-request-failed':
-          errorMessage = 'Make sure you have a stable connection and try again';
-          break;
-        default:
-          errorMessage = 'An error occurred. Please try again';
-          break;
-      }
+          switch (exception.code) {
+            case 'weak-password':
+              errorMessage = 'The password provided is too weak.';
+              break;
+            case 'email-already-in-use':
+              errorMessage = 'The account already exists for that email.';
+              break;
+            case 'network-request-failed':
+              errorMessage = 'Make sure you have a stable connection and try again';
+              break;
+            default:
+              errorMessage = 'An error occurred. Please try again';
+              break;
+          }
 
-      Helper.showSnackbar(_context, errorMessage, Colors.red);
-    });
+          Helper.showSnackbar(_context, errorMessage, Colors.red);
+        });
   }
 
   @override

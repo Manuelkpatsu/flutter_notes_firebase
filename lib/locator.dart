@@ -17,6 +17,8 @@ import 'screens/auth/login/login_event.dart';
 import 'screens/auth/sign_up/sign_up_bloc.dart';
 import 'screens/auth/sign_up/sign_up_event.dart';
 import 'screens/auth/splash/splash_bloc.dart';
+import 'screens/note/add_update_note/add_update_note_bloc.dart';
+import 'screens/note/add_update_note/add_update_note_event.dart';
 import 'screens/note/home/home_bloc.dart';
 import 'screens/note/home/home_domain_model.dart';
 import 'screens/note/home/home_event.dart';
@@ -108,6 +110,17 @@ void setUpLocator() {
       tuple.item2,
       get<ViewNoteDomainModel>(),
       MyNoteFlowCoordinator(context),
+    ),
+  );
+
+  // AddUpdateNoteScreen
+  get.registerFactoryParam<AddUpdateNoteBloc, BuildContext,
+      StreamController<AddUpdateNoteEvent>>(
+    (context, eventController) => AddUpdateNoteBloc(
+      context,
+      eventController,
+      get<NoteRepository>(),
+      get<MyNoteFlowCoordinator>(param1: context),
     ),
   );
 }

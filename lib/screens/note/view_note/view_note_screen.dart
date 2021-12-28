@@ -23,7 +23,7 @@ class ViewNoteScreen extends StatefulWidget {
 
   static const routeName = '/note';
 
-  ViewNoteScreen({
+  const ViewNoteScreen({
     Key? key,
     required this.argument,
   }) : super(key: key);

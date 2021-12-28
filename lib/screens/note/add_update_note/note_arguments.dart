@@ -2,8 +2,10 @@ import 'package:notesapp/model/note.dart';
 
 class NoteArguments {
   final Note? note;
+  final String? userId;
 
   NoteArguments({
-    required this.note
+    this.note,
+    this.userId,
   });
 }

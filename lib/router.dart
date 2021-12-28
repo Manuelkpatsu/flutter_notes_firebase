@@ -30,7 +30,7 @@ class AppRouter {
         final args = settings.arguments as ViewNoteArgument;
         return MaterialPageRoute(builder: (_) => ViewNoteScreen(argument: args));
       case AddUpdateNoteScreen.routeName:
-        final args = settings.arguments as NoteArguments?;
+        final args = settings.arguments as NoteArguments;
 
         return MaterialPageRoute(builder: (_) => AddUpdateNoteScreen(noteArguments: args));
       default:

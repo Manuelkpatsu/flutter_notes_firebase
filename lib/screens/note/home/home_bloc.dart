@@ -6,6 +6,7 @@ import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/screens/note/note_flow_coordinator.dart';
 import 'package:notesapp/utils/helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_domain_model.dart';
 import 'home_event.dart';
@@ -13,6 +14,7 @@ import 'home_model_data.dart';
 
 class HomeBloc extends ValueNotifier<HomeModelData> {
   final logger = Logger();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final BuildContext _context;
   final HomeDomainModel _homeDomainModel;
   final StreamController<HomeEvent> _eventController;
@@ -43,7 +45,8 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
         _logout();
         break;
       case GoToAddNoteScreenEvent:
-        _noteFlowCoordinator.goToAddNoteScreen();
+        final addNoteEvent = event as GoToAddNoteScreenEvent;
+        _noteFlowCoordinator.goToAddNoteScreen(addNoteEvent.arguments);
         break;
     }
   }
@@ -73,19 +76,22 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
       S.current.wantToLogOut,
       () {
         _noteFlowCoordinator.pop();
-        _userRepository.signOut().then((value) {
-          Helper.showSnackbar(
-            _context,
-            S.current.loggedOutSuccessfully,
-            Colors.green,
-          );
-          _noteFlowCoordinator.goToSplashScreen();
-        }).catchError((error) {
-          Helper.showSnackbar(
-            _context,
-            "Sorry, an error occurred. Please try again.",
-            Colors.red,
-          );
+        _prefs.then((SharedPreferences prefs) {
+          prefs.remove('userId');
+          _userRepository.signOut().then((value) {
+            Helper.showSnackbar(
+              _context,
+              S.current.loggedOutSuccessfully,
+              Colors.green,
+            );
+            _noteFlowCoordinator.goToSplashScreen();
+          }).catchError((error) {
+            Helper.showSnackbar(
+              _context,
+              "Sorry, an error occurred. Please try again.",
+              Colors.red,
+            );
+          });
         });
       },
     );

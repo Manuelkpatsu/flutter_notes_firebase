@@ -22,13 +22,15 @@ abstract class NoteFlowCoordinator {
   void goToSearchScreen();
 
   // Navigates to add note screen
-  void goToAddNoteScreen();
+  void goToAddNoteScreen(NoteArguments arguments);
 
   // Navigates to home screen after deletion
   void goToHomeScreenAfterDeletion();
 
   // Navigates to update note screen
   void goToUpdateNoteScreen(NoteArguments arguments);
+
+  void goToHomeScreenAfterSavingNote();
 }
 
 class MyNoteFlowCoordinator implements NoteFlowCoordinator {
@@ -68,10 +70,11 @@ class MyNoteFlowCoordinator implements NoteFlowCoordinator {
   }
 
   @override
-  void goToAddNoteScreen() {
+  void goToAddNoteScreen(NoteArguments arguments) {
     Navigator.push(
       _context,
-      MaterialPageRoute(builder: (context) => const AddUpdateNoteScreen()),
+      MaterialPageRoute(
+          builder: (context) => AddUpdateNoteScreen(noteArguments: arguments)),
     );
   }
 
@@ -89,6 +92,15 @@ class MyNoteFlowCoordinator implements NoteFlowCoordinator {
       _context,
       MaterialPageRoute(
           builder: (context) => AddUpdateNoteScreen(noteArguments: arguments)),
+    );
+  }
+
+  @override
+  void goToHomeScreenAfterSavingNote() {
+    Navigator.pushAndRemoveUntil(
+      _context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      (route) => false,
     );
   }
 }

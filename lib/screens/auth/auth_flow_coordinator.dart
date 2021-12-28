@@ -33,19 +33,25 @@ class MyAuthFlowCoordinator implements AuthFlowCoordinator {
 
   @override
   void goToForgotPasswordScreen() {
-    Navigator.pushNamed(_context, ForgotPasswordScreen.routeName);
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+    );
   }
 
   @override
   void goToLoginScreen() {
-    Navigator.pushNamed(_context, LoginScreen.routeName);
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
   void goToLoginScreenAndRemoveSplashScreen() {
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
       _context,
-      LoginScreen.routeName,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
       (route) => false,
     );
   }

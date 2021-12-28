@@ -29,12 +29,12 @@ class HomeDomainModel {
 
   HomeTileModelData _noteToTileModelData(Note note) {
     return HomeTileModelData(
-      id: note.id,
+      id: note.id!,
       title: note.title,
       description: note.description,
       color: note.color,
       priority: note.priority,
-      date: note.getDate(note.createdAt),
+      date: note.getDate(note.createdAt!),
     );
   }
 

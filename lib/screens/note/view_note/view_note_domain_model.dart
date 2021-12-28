@@ -20,13 +20,13 @@ class ViewNoteDomainModel {
   void _refreshData(String noteId) {
     _noteRepository.getNote(noteId).then((note) {
       ViewNoteModelData modelData = ViewNoteModelData(
-        noteId: note.id,
+        noteId: note.id!,
         title: note.title,
         description: note.description,
         userId: note.userId,
         color: note.color,
         priority: note.priority,
-        date: note.getDate(note.createdAt),
+        date: note.getDate(note.createdAt!),
       );
       _modelDataController.add(modelData);
     });
