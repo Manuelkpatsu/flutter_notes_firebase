@@ -177,6 +177,56 @@ class S {
     );
   }
 
+  /// `An error occurred whilst loading notes.`
+  String get errorLoadingNotes {
+    return Intl.message(
+      'An error occurred whilst loading notes.',
+      name: 'errorLoadingNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred whilst fetching authenticated user`
+  String get errorFetchingAuthUser {
+    return Intl.message(
+      'An error occurred whilst fetching authenticated user',
+      name: 'errorFetchingAuthUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a note by title`
+  String get searchNoteByTitle {
+    return Intl.message(
+      'Search for a note by title',
+      name: 'searchNoteByTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `'There are no notes matching your search query.\nPlease try again.'`
+  String get noNotesForSearchQuery {
+    return Intl.message(
+      '\'There are no notes matching your search query.\nPlease try again.\'',
+      name: 'noNotesForSearchQuery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note does not exist`
+  String get noteDoesNotExist {
+    return Intl.message(
+      'Note does not exist',
+      name: 'noteDoesNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want to logout?`
   String get wantToLogOut {
     return Intl.message(
@@ -317,6 +367,56 @@ class S {
     );
   }
 
+  /// `The password provided is too weak.`
+  String get weakPassword {
+    return Intl.message(
+      'The password provided is too weak.',
+      name: 'weakPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The account already exists for that email.`
+  String get emailAlreadyInUse {
+    return Intl.message(
+      'The account already exists for that email.',
+      name: 'emailAlreadyInUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make sure you have a stable connection and try again`
+  String get networkConnectionIssue {
+    return Intl.message(
+      'Make sure you have a stable connection and try again',
+      name: 'networkConnectionIssue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No user found for this email`
+  String get userNotFoundForEmail {
+    return Intl.message(
+      'No user found for this email',
+      name: 'userNotFoundForEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, wrong credentials provided`
+  String get wrongPassword {
+    return Intl.message(
+      'Sorry, wrong credentials provided',
+      name: 'wrongPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Submit`
   String get submit {
     return Intl.message(
@@ -342,6 +442,26 @@ class S {
     return Intl.message(
       'Cancel',
       name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error responding to event`
+  String get errorRespondingToEvent {
+    return Intl.message(
+      'Error responding to event',
+      name: 'errorRespondingToEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred. Please try again`
+  String get tryAgain {
+    return Intl.message(
+      'An error occurred. Please try again',
+      name: 'tryAgain',
       desc: '',
       args: [],
     );

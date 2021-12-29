@@ -29,11 +29,11 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
         .getNoteStream(_noteId)
         .listen((modelData) => _refreshUI(modelData))
         .onError((error) {
-      _logger.e('Error loading note', error);
+      _logger.e(S.current.errorLoadingNotes, error);
     });
 
     _eventController.stream.listen((event) => _handleEvent(event)).onError((error) {
-      _logger.e('Error responding to event', error);
+      _logger.e(S.current.errorRespondingToEvent, error);
     });
   }
 
@@ -52,7 +52,7 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
         date: modelData.date,
       );
     } else {
-      _logger.w('Payment method does not exist');
+      _logger.w(S.current.noteDoesNotExist);
     }
   }
 
@@ -62,7 +62,7 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
   void _handleEvent(ViewNoteEvent event) {
     switch (event.runtimeType) {
       case DeleteNoteEvent:
-        _removePaymentMethod();
+        _removeNote();
         break;
       case EditNoteEvent:
         final editNoteEvent = event as EditNoteEvent;
@@ -72,7 +72,7 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
   }
 
   /// Removes the payment method
-  void _removePaymentMethod() {
+  void _removeNote() {
     Helper.showAlertDialog(
       _context,
       S.current.deleteNote,
@@ -84,10 +84,10 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
             S.current.successfullyDeleted,
             Colors.green,
           );
-          _noteFlowCoordinator.goToSplashScreen();
+          _noteFlowCoordinator.goToHomeScreenAfterDeletion();
         }).catchError((error) {
-          _logger.e('Error removing note', error);
-          Helper.showSnackbar(_context, 'An error occurred. Try again.', Colors.red);
+          _logger.e(S.current.tryAgain, error);
+          Helper.showSnackbar(_context, S.current.tryAgain, Colors.red);
         });
       },
     );

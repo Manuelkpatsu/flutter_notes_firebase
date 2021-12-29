@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 import '../auth_flow_coordinator.dart';
 import 'sign_up_event.dart';
@@ -27,7 +28,7 @@ class SignUpBloc extends ValueNotifier<SignUpModelData> {
   ) : super(const SignUpModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
-        .onError((error) => _logger.e('Error responding to event', error));
+        .onError((error) => _logger.e(S.current.errorRespondingToEvent, error));
   }
 
   /// Handles [SignUpEvent]
@@ -61,16 +62,16 @@ class SignUpBloc extends ValueNotifier<SignUpModelData> {
 
           switch (exception.code) {
             case 'weak-password':
-              errorMessage = 'The password provided is too weak.';
+              errorMessage = S.current.weakPassword;
               break;
             case 'email-already-in-use':
-              errorMessage = 'The account already exists for that email.';
+              errorMessage = S.current.emailAlreadyInUse;
               break;
             case 'network-request-failed':
-              errorMessage = 'Make sure you have a stable connection and try again';
+              errorMessage = S.current.networkConnectionIssue;
               break;
             default:
-              errorMessage = 'An error occurred. Please try again';
+              errorMessage = S.current.tryAgain;
               break;
           }
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notesapp/widgets/empty_state.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 import '../../../locator.dart';
 import 'search_bloc.dart';
@@ -86,7 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: 'Search for a note by title',
+          hintText: S.current.searchNoteByTitle,
           hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500),
         ),
         onChanged: (searchQuery) {
@@ -118,8 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
       valueListenable: bloc,
       builder: (context, modelDataList, child) {
         if (modelDataList.isEmpty) {
-          return const EmptyState(
-              info: 'There are no notes matching your query.\nPlease try again.');
+          return EmptyState(info: S.current.noNotesForSearchQuery);
         } else {
           return StaggeredGridView.countBuilder(
             physics: const BouncingScrollPhysics(),

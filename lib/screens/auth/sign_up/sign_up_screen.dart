@@ -6,7 +6,6 @@ import 'package:notesapp/utils/validator.dart';
 import 'package:notesapp/widgets/password_input_field.dart';
 import 'package:notesapp/widgets/primary_button.dart';
 import 'package:notesapp/widgets/text_input_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../locator.dart';
 import '../../../styles.dart';

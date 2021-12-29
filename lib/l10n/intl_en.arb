@@ -14,6 +14,11 @@
   "low": "Low",
   "high": "High",
   "veryHigh": "Very High",
+  "errorLoadingNotes": "An error occurred whilst loading notes.",
+  "errorFetchingAuthUser": "An error occurred whilst fetching authenticated user",
+  "searchNoteByTitle": "Search for a note by title",
+  "noNotesForSearchQuery": "'There are no notes matching your search query.\nPlease try again.'",
+  "noteDoesNotExist": "Note does not exist",
 
   "wantToLogOut": "Do you want to logout?",
   "loggedOutSuccessfully": "User logged out successfully.",
@@ -29,10 +34,18 @@
   "forgotPassword": "Forgot Password?",
   "doNotHaveAccount": "Don't have an account? ",
   "forgotYourPassword": "Forgot your\npassword",
+  "weakPassword": "The password provided is too weak.",
+  "emailAlreadyInUse": "The account already exists for that email.",
+  "networkConnectionIssue": "Make sure you have a stable connection and try again",
+  "userNotFoundForEmail": "No user found for this email",
+  "wrongPassword": "Sorry, wrong credentials provided",
+
 
   "submit": "Submit",
   "ok": "Ok",
   "cancel": "Cancel",
+  "errorRespondingToEvent": "Error responding to event",
+  "tryAgain": "An error occurred. Please try again",
 
   "pleaseConfirmPassword": "Please confirm password",
   "passwordsDoNotMatch": "Passwords do not match",

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:notesapp/generated/l10n.dart';
 import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
 
@@ -25,7 +26,7 @@ class ForgotPasswordBloc extends ValueNotifier<ForgotPasswordModelData> {
   ) : super(const ForgotPasswordModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
-        .onError((error) => _logger.e('Error responding to event', error));
+        .onError((error) => _logger.e(S.current.errorRespondingToEvent, error));
   }
 
   /// Handles [ForgotPasswordEvent]
@@ -52,13 +53,13 @@ class ForgotPasswordBloc extends ValueNotifier<ForgotPasswordModelData> {
 
       switch (exception.code) {
         case 'user-not-found':
-          errorMessage = 'No user found for this email';
+          errorMessage = S.current.userNotFoundForEmail;
           break;
         case 'network-request-failed':
-          errorMessage = 'Make sure you have a stable connection and try again';
+          errorMessage = S.current.networkConnectionIssue;
           break;
         default:
-          errorMessage = 'An error occurred. Please try again';
+          errorMessage = S.current.tryAgain;
           break;
       }
 

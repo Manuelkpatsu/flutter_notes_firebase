@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:logger/logger.dart';
 import 'package:notesapp/screens/note/note_flow_coordinator.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 import 'home_tile_event.dart';
 
@@ -14,7 +15,7 @@ class HomeTileBloc {
     _eventController.stream.listen((event) {
       _handleEvent(event);
     }).onError((error) {
-      logger.e('An error occurred', error);
+      logger.e(S.current.errorRespondingToEvent, error);
     });
   }
 

@@ -30,7 +30,7 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
   ) : super(const HomeModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
-        .onError((error) => logger.e('Error responding to event', error));
+        .onError((error) => logger.e(S.current.errorRespondingToEvent, error));
 
     _getNotes();
   }
@@ -59,12 +59,12 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
         _homeDomainModel.getNotesStream(user.uid).listen((modelData) {
           value = modelData;
         }).onError((error) {
-          logger.e('Error loading notes', error);
-          value = value.copyWith(message: 'An error occurred loading notes.');
+          logger.e(S.current.errorLoadingNotes, error);
+          value = value.copyWith(message: S.current.errorFetchingAuthUser);
         });
       }
     }).catchError((error) {
-      logger.e('Error loading authenticated user', error);
+      logger.e(S.current.errorFetchingAuthUser, error);
     }).whenComplete(() {
       value = value.copyWith(loading: false);
     });
@@ -88,7 +88,7 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
           }).catchError((error) {
             Helper.showSnackbar(
               _context,
-              "Sorry, an error occurred. Please try again.",
+              S.current.tryAgain,
               Colors.red,
             );
           });

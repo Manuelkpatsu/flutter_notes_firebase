@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:notesapp/styles.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 class Helper {
   /// Shows a snackbar
@@ -36,14 +37,14 @@ class Helper {
                 Navigator.of(context).pop();
               },
               child: Text(
-                'Cancel'.toUpperCase(),
+                S.current.cancel.toUpperCase(),
                 style: kNoteHeading5.copyWith(color: Colors.red.shade900),
               ),
             ),
             TextButton(
               onPressed: onPressed,
               child: Text(
-                'Ok'.toUpperCase(),
+                S.current.ok.toUpperCase(),
                 style: kNoteHeading5.copyWith(color: Colors.green),
               ),
             ),

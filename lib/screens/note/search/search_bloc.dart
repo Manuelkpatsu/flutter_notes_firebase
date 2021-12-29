@@ -5,6 +5,7 @@ import 'package:fuzzy/fuzzy.dart';
 import 'package:logger/logger.dart';
 import 'package:notesapp/repository/user_repository.dart';
 import 'package:notesapp/utils/helper.dart';
+import 'package:notesapp/generated/l10n.dart';
 
 import 'search_domain_model.dart';
 import 'search_event.dart';
@@ -26,7 +27,7 @@ class SearchBloc extends ValueNotifier<List<SearchNoteTileModelData>> {
   ) : super([]) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
-        .onError((error) => _logger.e('Error responding to event', error));
+        .onError((error) => _logger.e(S.current.errorRespondingToEvent, error));
 
     _loadNotes();
   }
@@ -54,14 +55,14 @@ class SearchBloc extends ValueNotifier<List<SearchNoteTileModelData>> {
         }).onError((error) {
           Helper.showSnackbar(
             _context,
-            "Sorry, an error occurred loading notes",
+            S.current.errorLoadingNotes,
             Colors.red,
           );
-          _logger.e('Error loading notes', error);
+          _logger.e(S.current.errorLoadingNotes, error);
         });
       }
     }).catchError((error) {
-      _logger.e('Error loading authenticated user', error);
+      _logger.e(S.current.errorFetchingAuthUser, error);
     });
   }
 

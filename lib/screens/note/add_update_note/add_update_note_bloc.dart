@@ -26,7 +26,7 @@ class AddUpdateNoteBloc extends ValueNotifier<AddUpdateNoteModelData> {
   ) : super(const AddUpdateNoteModelData()) {
     _eventController.stream
         .listen((event) => _handleEvent(event))
-        .onError((error) => _logger.e('Error responding to event', error));
+        .onError((error) => _logger.e(S.current.errorRespondingToEvent, error));
   }
 
   /// Handles [AddUpdateNoteEvent]
@@ -56,7 +56,7 @@ class AddUpdateNoteBloc extends ValueNotifier<AddUpdateNoteModelData> {
     }).catchError((error) {
       Helper.showSnackbar(
         _context,
-        'Sorry, an error occurred. Please try again.',
+        S.current.tryAgain,
         Colors.red.shade900,
       );
     }).whenComplete(() => value = value.copyWith(saving: false));
@@ -75,7 +75,7 @@ class AddUpdateNoteBloc extends ValueNotifier<AddUpdateNoteModelData> {
     }).catchError((error) {
       Helper.showSnackbar(
         _context,
-        'Sorry, an error occurred. Please try again.',
+        S.current.tryAgain,
         Colors.red.shade900,
       );
     }).whenComplete(() => value = value.copyWith(saving: false));
