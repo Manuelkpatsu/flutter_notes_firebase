@@ -56,53 +56,63 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
     return ValueListenableBuilder<ViewNoteModelData>(
       valueListenable: bloc,
       builder: (context, modelData, child) {
-        return Scaffold(
-          backgroundColor: NoteColors.colors[modelData.color],
-          appBar: AppBar(
+        if (modelData.loading == true) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (modelData.message.isNotEmpty) {
+          return Scaffold(
+            body: Center(child: Text(modelData.message)),
+          );
+        } else {
+          return Scaffold(
             backgroundColor: NoteColors.colors[modelData.color],
-            title: Text(
-              modelData.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline5,
+            appBar: AppBar(
+              backgroundColor: NoteColors.colors[modelData.color],
+              title: Text(
+                modelData.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              actions: [deleteNote()],
+              centerTitle: true,
             ),
-            actions: [deleteNote()],
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PriorityPicker(
-                  selectedIndex: 3 - modelData.priority,
-                ),
-                ColorPicker(
-                  selectedIndex: modelData.color,
-                ),
-                titleText(modelData.title),
-                const SizedBox(height: 5),
-                date(modelData.date),
-                descriptionText(modelData.description),
-              ],
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PriorityPicker(
+                    selectedIndex: 3 - modelData.priority,
+                  ),
+                  ColorPicker(
+                    selectedIndex: modelData.color,
+                  ),
+                  titleText(modelData.title),
+                  const SizedBox(height: 5),
+                  date(modelData.date),
+                  descriptionText(modelData.description),
+                ],
+              ),
             ),
-          ),
-          floatingActionButton: CustomFloatingActionButton(
-            onPressed: () {
-              Note note = Note(
-                  id: modelData.noteId,
-                  title: modelData.title,
-                  userId: modelData.userId,
-                  description: modelData.description,
-                  color: modelData.color,
-                  priority: modelData.priority,
-                  createdAt: Helper.formatStringDateToTimestamp(modelData.date)
-              );
-              eventController.add(EditNoteEvent(NoteArguments(note: note)));
-            },
-            icon: Icons.edit_outlined,
-            tooltip: S.current.editNote,
-          ),
-        );
+            floatingActionButton: CustomFloatingActionButton(
+              onPressed: () {
+                Note note = Note(
+                    id: modelData.noteId,
+                    title: modelData.title,
+                    userId: modelData.userId,
+                    description: modelData.description,
+                    color: modelData.color,
+                    priority: modelData.priority,
+                    createdAt:
+                        Helper.formatStringDateToTimestamp(modelData.date));
+                eventController.add(EditNoteEvent(NoteArguments(note: note)));
+              },
+              icon: Icons.edit_outlined,
+              tooltip: S.current.editNote,
+            ),
+          );
+        }
       },
     );
   }

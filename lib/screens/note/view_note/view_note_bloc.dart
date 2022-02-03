@@ -25,14 +25,19 @@ class ViewNoteBloc extends ValueNotifier<ViewNoteModelData> {
     this._noteDomainModel,
     this._noteFlowCoordinator,
   ) : super(const ViewNoteModelData()) {
-    _noteDomainModel
-        .getNoteStream(_noteId)
-        .listen((modelData) => _refreshUI(modelData))
-        .onError((error) {
+    value = value.copyWith(loading: true);
+    _noteDomainModel.getNoteStream(_noteId).listen((modelData) {
+      value = value.copyWith(loading: false);
+      _refreshUI(modelData);
+    }).onError((error) {
+      value =
+          value.copyWith(loading: false, message: S.current.errorLoadingNotes);
       _logger.e(S.current.errorLoadingNotes, error);
     });
 
-    _eventController.stream.listen((event) => _handleEvent(event)).onError((error) {
+    _eventController.stream
+        .listen((event) => _handleEvent(event))
+        .onError((error) {
       _logger.e(S.current.errorRespondingToEvent, error);
     });
   }

@@ -60,11 +60,12 @@ class HomeBloc extends ValueNotifier<HomeModelData> {
           value = modelData;
         }).onError((error) {
           logger.e(S.current.errorLoadingNotes, error);
-          value = value.copyWith(message: S.current.errorFetchingAuthUser);
+          value = value.copyWith(message: S.current.errorLoadingNotes);
         });
       }
     }).catchError((error) {
       logger.e(S.current.errorFetchingAuthUser, error);
+      value = value.copyWith(message: S.current.errorFetchingAuthUser);
     }).whenComplete(() {
       value = value.copyWith(loading: false);
     });

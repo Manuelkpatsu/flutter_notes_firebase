@@ -8,7 +8,6 @@ import 'package:notesapp/screens/note/home/home_tile.dart';
 import 'package:notesapp/styles.dart';
 import 'package:notesapp/widgets/custom_floating_action_button.dart';
 import 'package:notesapp/generated/l10n.dart';
-import 'package:notesapp/widgets/empty_state.dart';
 import 'package:notesapp/widgets/error_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
